@@ -53,8 +53,7 @@ export default function DivisionalResortList() {
     );
 
     const handleResortPress = (resort: Resort) => {
-        if (resort.status === 'approved') return;
-        if (resort.status === 'pending') {
+        if (resort.status === 'approved' || resort.status === 'pending') {
             router.push(`/divisional/view/${resort.id}`);
             return;
         }
@@ -70,7 +69,7 @@ export default function DivisionalResortList() {
             <TouchableOpacity
                 style={[styles.card, isLocked && styles.cardLocked]}
                 onPress={() => handleResortPress(item)}
-                activeOpacity={isLocked ? 1 : 0.7}
+                activeOpacity={0.7}
             >
                 <View style={styles.cardLeft}>
                     <View style={styles.numberCircle}>
@@ -87,7 +86,7 @@ export default function DivisionalResortList() {
                     </View>
                     {item.currentRating && <StarRow count={item.currentRating} />}
                     <Text style={styles.detailText}>AREA: {item.area}</Text>
-                    <Text style={styles.detailText}>MANAGER: {item.ownerName}</Text>
+                    <Text style={styles.detailText}>PHONE: {item.ownerPhone}</Text>
                     <Text style={styles.detailText}>
                         ROOMS: {item.roomCount === 'Villa' ? 'Villa' : item.roomCount}
                     </Text>

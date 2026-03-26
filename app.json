@@ -12,12 +12,19 @@
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#0D7377"
-      }
+      },
+      "package": "com.sglr.rating"
     },
     "plugins": [
       "expo-router",
       "expo-sqlite",
       "expo-sharing"
-    ]
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "4df9445c-8ec8-44c4-9089-2d80d8c0c848"
+      }
+    }
   }
 }
