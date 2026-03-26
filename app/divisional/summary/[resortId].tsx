@@ -9,7 +9,7 @@ import {
     Modal,
 } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useApp } from '../../../context/AppContext';
 import { CHECKLIST, CATEGORY_MAX, CATEGORY_LABELS, Category } from '../../../data/checklist';
 import { colors, spacing, radius } from '../../../constants/theme';
@@ -46,12 +46,12 @@ export default function InspectionSummary() {
     const [responses, setResponses] = useState<Record<string, number | null>>({});
     const [loaded, setLoaded] = useState(false);
 
-    if (!loaded) {
+    useEffect(() => {
         AsyncStorage.getItem(`draft_inspection_${resortId}`).then(raw => {
             if (raw) setResponses(JSON.parse(raw));
             setLoaded(true);
         });
-    }
+    }, [resortId]);
 
     if (!resort || !loaded) {
         return (

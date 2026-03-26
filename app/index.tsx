@@ -1,7 +1,7 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useApp } from '../context/AppContext';
-import { colors, typography, spacing, radius } from '../constants/theme';
+import { colors, spacing, radius } from '../constants/theme';
 
 export default function RoleSelection() {
     const router = useRouter();
@@ -20,7 +20,11 @@ export default function RoleSelection() {
         <View style={styles.container}>
             <View style={styles.logoContainer}>
                 <View style={styles.logoCircle}>
-                    <Text style={styles.logoText}>🌴</Text>
+                    <Image
+                        source={require('../assets/images/icon.png')}
+                        style={styles.logoImage}
+                        resizeMode="cover"
+                    />
                 </View>
                 <Text style={styles.title}>Beach Resort</Text>
                 <Text style={styles.subtitle}>SGLR Rating</Text>
@@ -74,9 +78,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: spacing.md,
+        overflow: 'hidden',
     },
-    logoText: {
-        fontSize: 48,
+    logoImage: {
+        width: 100,
+        height: 100,
+        borderRadius: 50,
     },
     title: {
         fontSize: 28,

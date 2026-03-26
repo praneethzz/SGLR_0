@@ -47,6 +47,7 @@ export default function InspectionForm() {
 
     const [responses, setResponses] = useState<Responses>(emptyResponses);
     const [showRestoreModal, setShowRestoreModal] = useState(false);
+    const [showConfirmFreshModal, setShowConfirmFreshModal] = useState(false);
     const [draftData, setDraftData] = useState<Responses | null>(null);
 
     useEffect(() => {
@@ -256,10 +257,12 @@ export default function InspectionForm() {
 
             {/* Confirm start fresh modal */}
             <ConfirmFreshModal
-                resortId={resortId}
+                visible={showConfirmFreshModal}
+                onClose={() => setShowConfirmFreshModal(false)}
                 onConfirm={() => {
                     deleteDraft(resortId);
                     setResponses(emptyResponses);
+                    setShowConfirmFreshModal(false);
                 }}
             />
         </View>
@@ -267,14 +270,14 @@ export default function InspectionForm() {
 }
 
 function ConfirmFreshModal({
-    resortId,
+    visible,
+    onClose,
     onConfirm,
 }: {
-    resortId: string;
+    visible: boolean;
+    onClose: () => void;
     onConfirm: () => void;
 }) {
-    const [visible, setVisible] = useState(false);
-
     return (
         <Modal visible={visible} transparent animationType="fade">
             <View style={styles.modalOverlay}>
@@ -285,16 +288,13 @@ function ConfirmFreshModal({
                     </Text>
                     <TouchableOpacity
                         style={[styles.modalBtnPrimary, { backgroundColor: colors.red }]}
-                        onPress={() => {
-                            onConfirm();
-                            setVisible(false);
-                        }}
+                        onPress={onConfirm}
                     >
                         <Text style={styles.modalBtnPrimaryText}>Yes, Delete & Start Fresh</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.modalBtnSecondary}
-                        onPress={() => setVisible(false)}
+                        onPress={onClose}
                     >
                         <Text style={styles.modalBtnSecondaryText}>Cancel</Text>
                     </TouchableOpacity>
@@ -350,7 +350,6 @@ const styles = StyleSheet.create({
     },
     progressTrack: {
         height: 4,
-        backgroundColor: 'rgba(255,255,255,0.3)',
         backgroundColor: colors.primaryDark,
     },
     progressFill: {
